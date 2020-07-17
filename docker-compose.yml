@@ -2,8 +2,47 @@ version: '3.7'
 
 services:
   db:
+    container_name: rethinkdb_db
     image: rethinkdb:latest
     ports:
       - '8080:8080'
       - '29015:29015'
       - '28015:28015'
+    volumes:
+      - rethink-data:/rethinkdb/data
+    networks:
+      - parabol-network
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080']
+      interval: 20s
+      timeout: 10s
+      retries: 5
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+    networks:
+      - parabol-network
+  app:
+    env_file: ./.env
+    build:
+      context: ./
+      dockerfile: './scripts/Dockerfile'
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+      - redis
+    networks:
+      - parabol-network
+    volumes:
+      - ./:/home/node/app
+      - node_modules:/home/node/app/node_modules
+networks:
+  parabol-network:
+volumes:
+  redis-data:
+  rethink-data:
+  node_modules:

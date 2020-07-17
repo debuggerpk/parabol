@@ -12,10 +12,12 @@ const startMigration = async () => {
   }
   const PROJECT_ROOT = getProjectRoot()
   const DB_ROOT = path.join(PROJECT_ROOT, 'packages/server/database')
-  const {hostname, port, path: urlPath} = parse(process.env.RETHINKDB_URL)
-  process.env.host = hostname
-  process.env.port = port
-  process.env.db = urlPath.slice(1)
+  const {hostname, port, path: urlPath} = parse(
+    `rethinkdb://${process.env.RETHINKDB_HOST}:${process.env.RETHINKDB_PORT}/${process.env.RETHINKDB_DB}`
+  )
+  process.env.host = process.env.RETHINKDB_HOST
+  process.env.port = process.env.RETHINKDB_PORT
+  process.env.db = process.env.RETHINKDB_DB
   process.env.r = process.cwd()
   try {
     await migrate[direction]({all, root: DB_ROOT})

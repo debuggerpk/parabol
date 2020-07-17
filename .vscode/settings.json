@@ -36,4 +36,9 @@
 	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
 	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
 	"editor.formatOnSave": true,
+	"workbench.colorCustomizations": {
+		"activityBar.background": "#07350E",
+		"titleBar.activeBackground": "#0A4B14",
+		"titleBar.activeForeground": "#F1FDF3"
+	},
 }
