@@ -11,10 +11,12 @@ interface Job {
   timeoutId: NodeJS.Timeout
 }
 
+const redisUrl = `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`
+
 export default class PubSubPromise<T extends PubSubPromisePayload> {
   jobs = {} as {[jobId: string]: Job}
-  publisher = new Redis(process.env.REDIS_URL)
-  subscriber = new Redis(process.env.REDIS_URL)
+  publisher = new Redis(redisUrl)
+  subscriber = new Redis(redisUrl)
   subChannel: string
   pubChannel: string
 

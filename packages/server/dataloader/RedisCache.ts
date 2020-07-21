@@ -8,13 +8,15 @@ const TTL = ms('3h')
 const msetpx = (key: string, value: object) => {
   return ['set', key, JSON.stringify(value), 'PX', TTL] as string[]
 }
+
+const redisUrl = `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`
 // type ClearLocal = (key: string) => void
 
 export default class RedisCache<T extends keyof DBType> {
   rethinkDBCache = new RethinkDBCache()
   redis?: Redis.Redis
   // remote invalidation is stuck on upgrading to Redis v6 in prod
-  // invalidator = new Redis(process.env.REDIS_URL)
+  // invalidator = new Redis(redisUrl)
   cachedTypes = new Set<string>()
   invalidatorClientId!: string
   // constructor(clearLocal: ClearLocal) {
@@ -42,7 +44,7 @@ export default class RedisCache<T extends keyof DBType> {
   // }
   private getRedis() {
     if (!this.redis) {
-      this.redis = new Redis(process.env.REDIS_URL)
+      this.redis = new Redis(redisUrl)
     }
     return this.redis
   }
