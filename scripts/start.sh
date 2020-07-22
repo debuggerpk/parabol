@@ -1,9 +1,7 @@
 #!/bin/sh
 
-source /home/node/app/.env
-
-printenv
+source /parabol/.env
 
 npm install -g yarn
 
-yarn && yarn dev
+yarn && yarn dev -i
