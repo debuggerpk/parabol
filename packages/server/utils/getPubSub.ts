@@ -1,13 +1,11 @@
 import Redis from 'ioredis'
 import GraphQLRedisPubSub from './GraphQLRedisPubSub'
 
-const redisUrl = `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`
-
 let pubsub: GraphQLRedisPubSub
 const getPubSub = () => {
   if (!pubsub) {
-    const pub = new Redis(redisUrl)
-    const sub = new Redis(redisUrl)
+    const pub = new Redis(process.env.REDIS_URL)
+    const sub = new Redis(process.env.REDIS_URL)
     pubsub = new GraphQLRedisPubSub(pub, sub)
   }
   return pubsub

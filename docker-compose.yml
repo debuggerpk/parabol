@@ -2,10 +2,7 @@ version: '3.7'
 
 services:
   db:
-    container_name: rethinkdb_db
-    build:
-      context: ./
-      dockerfile: './scripts/toolboxSrc/Dockerfile'
+    image: rethinkdb:latest
     ports:
       - '8080:8080'
       - '29015:29015'
@@ -14,11 +11,6 @@ services:
       - rethink-data:/rethinkdb/data
     networks:
       - parabol-network
-    healthcheck:
-      test: ['CMD', 'curl', '-f', 'http://localhost:8080']
-      interval: 20s
-      timeout: 10s
-      retries: 5
   redis:
     container_name: parabol_redis
     image: redis
@@ -29,23 +21,26 @@ services:
     networks:
       - parabol-network
   app:
-    env_file: ./.env
     build:
-      context: ./
-      dockerfile: './scripts/Dockerfile'
+      context: .
+      dockerfile: ./scripts/Dockerfile
+      target: dev
+    env_file: .env
+    command: yarn dev -i
     ports:
       - '3000:3000'
+      - '3001:3001'
     depends_on:
       - db
       - redis
     networks:
       - parabol-network
     volumes:
-      - ./:/parabol/
-      - node_modules:/parabol/node_modules
+      - .:/parabol
+      - node-modules:/parabol/node_modules
 networks:
   parabol-network:
 volumes:
   redis-data:
   rethink-data:
-  node_modules:
+  node-modules:

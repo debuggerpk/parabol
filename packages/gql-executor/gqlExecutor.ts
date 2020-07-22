@@ -1,9 +1,8 @@
 import Redis from 'ioredis'
 import {ServerChannel} from 'parabol-client/types/constEnums'
 
-const redisUrl = `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`
-const publisher = new Redis(redisUrl)
-const subscriber = new Redis(redisUrl)
+const publisher = new Redis(process.env.REDIS_URL)
+const subscriber = new Redis(process.env.REDIS_URL)
 
 const onMessage = async (_channel: string, message: string) => {
   const payload = JSON.parse(message)

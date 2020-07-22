@@ -1,23 +1,18 @@
 import flag from 'node-env-flag'
+import {parse} from 'url'
 import readCert from './readCert'
 
 export default function getRethinkConfig() {
-  const urlString = `rethinkdb://${process.env.RETHINKDB_HOST}:${process.env.RETHINKDB_PORT}/${process.env.RETHINKDB_DB}`
-  if (!urlString)
-    throw new Error(
-      'HOST: ' +
-        process.env.RETHINKDB_HOST +
-        ', PORT: ' +
-        process.env.RETHINKDB_PORT +
-        ', DB:' +
-        process.env.RETHINKDB_DB +
-        ', Invalid RETHINKDB_URL in ENV'
-    )
+  const urlString = process.env.RETHINKDB_URL
+  console.log(urlString)
+  if (!urlString) throw new Error('Invalid RETHINKDB_URL in ENV')
+  const u = parse(urlString)
+  if (!u.port || !u.path) throw new Error('Invalid RethinkDB URL')
   const config = {
-    host: process.env.RETHINKDB_HOST || '',
-    port: 28015,
+    host: u.hostname || '',
+    port: parseInt(u.port, 10),
     authKey: process.env.RETHINKDB_AUTH_KEY || '',
-    db: process.env.RETHINKDB_DB,
+    db: u.path.split('/')[1],
     min: process.env.NODE_ENV === 'production' ? 50 : 3,
     buffer: process.env.NODE_ENV === 'production' ? 50 : 3
   }

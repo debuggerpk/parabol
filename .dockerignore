@@ -1,6 +1,8 @@
-node_modules
-.circleci
-.github
-.vscode
-build
-dev
+/node_modules
+/dev
+/build
+/dist
+/.circleci
+/.git
+/.github
+/.vscode

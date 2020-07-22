@@ -37,8 +37,22 @@
 	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
 	"editor.formatOnSave": true,
 	"workbench.colorCustomizations": {
-		"activityBar.background": "#07350E",
-		"titleBar.activeBackground": "#0A4B14",
-		"titleBar.activeForeground": "#F1FDF3"
+		"activityBar.background": "#07350d",
+		"titleBar.activeBackground": "#010802",
+		"titleBar.activeForeground": "#e7e7e7",
+		"activityBar.activeBackground": "#07350d",
+		"activityBar.activeBorder": "#503ae5",
+		"activityBar.foreground": "#e7e7e7",
+		"activityBar.inactiveForeground": "#e7e7e799",
+		"activityBarBadge.background": "#503ae5",
+		"activityBarBadge.foreground": "#e7e7e7",
+		"statusBar.background": "#010802",
+		"statusBar.border": "#010802",
+		"statusBar.foreground": "#e7e7e7",
+		"statusBarItem.hoverBackground": "#07350d",
+		"titleBar.border": "#010802",
+		"titleBar.inactiveBackground": "#01080299",
+		"titleBar.inactiveForeground": "#e7e7e799"
 	},
+	"peacock.color": "#010802",
 }
