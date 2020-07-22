@@ -12,7 +12,6 @@ services:
     networks:
       - parabol-network
   redis:
-    container_name: parabol_redis
     image: redis
     ports:
       - '6379:6379'
@@ -23,13 +22,11 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./scripts/Dockerfile
+      dockerfile: ./docker/Dockerfile
       target: dev
     env_file: .env
-    command: yarn dev -i
     ports:
       - '3000:3000'
-      - '3001:3001'
     depends_on:
       - db
       - redis

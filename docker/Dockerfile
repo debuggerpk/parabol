@@ -11,17 +11,19 @@ COPY . .
 RUN chown -Rh node:node /home/node && chown -Rh node:node /parabol
 
 FROM base as dev
-RUN cp scripts/entrypoint.dev.sh /bin/entrypoint
+RUN rm -rf dev
+RUN cp docker/entrypoint.dev.sh /bin/entrypoint
 RUN chmod +x /bin/entrypoint
 USER node
-ENTRYPOINT [ "entrypoint" ]
 EXPOSE 3000
+ENTRYPOINT [ "entrypoint" ]
+
 CMD ["yarn", "dev", "-i"]
 
 FROM base as prod
-RUN scripts/entrypoint.prod.sh /bin/entrypoint
+RUN docker/entrypoint.prod.sh /bin/entrypoint
 RUN chmod +x /bin/entrypoint
 USER node
-ENTRYPOINT [ "entrypoint" ]
 EXPOSE 80
+ENTRYPOINT [ "entrypoint" ]
 CMD ["yarn", "start"]
