@@ -35,9 +35,15 @@ services:
     volumes:
       - .:/parabol
       - node-modules:/parabol/node_modules
+      - build:/parabol/build
+      - dev:/parabol/dev
+      - generated:/parabol/packages/client/__generated__
 networks:
   parabol-network:
 volumes:
+  build:
+  dev:
+  generated:
+  node-modules:
   redis-data:
   rethink-data:
-  node-modules:

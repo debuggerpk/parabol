@@ -6,3 +6,4 @@
 /.git
 /.github
 /.vscode
+/packages/client/__generated__

@@ -8,13 +8,12 @@ WORKDIR /parabol/
 ADD package.json .
 ADD yarn.lock .
 COPY . .
-RUN chown -Rh node:node /home/node && chown -Rh node:node /parabol
+# RUN chown -Rh node:node /home/node && chown -Rh node:node /parabol
 
 FROM base as dev
-RUN rm -rf dev
 RUN cp docker/entrypoint.dev.sh /bin/entrypoint
 RUN chmod +x /bin/entrypoint
-USER node
+# USER node
 EXPOSE 3000
 ENTRYPOINT [ "entrypoint" ]
 
@@ -23,7 +22,7 @@ CMD ["yarn", "dev", "-i"]
 FROM base as prod
 RUN docker/entrypoint.prod.sh /bin/entrypoint
 RUN chmod +x /bin/entrypoint
-USER node
+# USER node
 EXPOSE 80
 ENTRYPOINT [ "entrypoint" ]
 CMD ["yarn", "start"]
